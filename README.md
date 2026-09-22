@@ -15,14 +15,14 @@ REST API for the UNFOLD application.
 
 - Node.js 22 or newer
 - PostgreSQL
-- pnpm
+- npm
 
 ## Setup
 
 Install dependencies:
 
 ```bash
-pnpm install
+npm install
 ```
 
 Copy the environment file and update its values:
@@ -34,13 +34,13 @@ cp .env.example .env
 Apply database migrations:
 
 ```bash
-pnpm db:migrate
+npm run db:migrate
 ```
 
 Start the development server:
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 The API runs at `http://localhost:3001` by default.
@@ -58,13 +58,13 @@ The API runs at `http://localhost:3001` by default.
 
 | Command | Description |
 | --- | --- |
-| `pnpm dev` | Start the development server with file watching |
-| `pnpm build` | Compile TypeScript |
-| `pnpm start` | Run the compiled server |
-| `pnpm test` | Run tests |
-| `pnpm typecheck` | Check TypeScript types |
-| `pnpm db:generate` | Generate a Drizzle migration |
-| `pnpm db:migrate` | Apply database migrations |
+| `npm run dev` | Start the development server with file watching |
+| `npm run build` | Compile TypeScript |
+| `npm start` | Run the compiled server |
+| `npm test` | Run tests |
+| `npm run typecheck` | Check TypeScript types |
+| `npm run db:generate` | Generate a Drizzle migration |
+| `npm run db:migrate` | Apply database migrations |
 
 ## API endpoints
 
