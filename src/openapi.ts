@@ -26,21 +26,26 @@ export const openApiDocument = {
   info: {
     title: "UNFOLD API",
     version: "0.1.0",
-    description: "Backend API for authentication, emotional check-ins, mind entries, and small wins.",
+    description: "API backend UNFOLD untuk autentikasi, pencatatan emosi, mind entries, dan small wins.",
   },
-  servers: [{ url: "/", description: "Current server" }],
+  servers: [{ url: "/", description: "Server aktif" }],
   tags: [
-    { name: "System" },
-    { name: "Auth" },
-    { name: "Emotional Check-ins" },
-    { name: "Mind Entries" },
-    { name: "Small Wins" },
+    { name: "System", description: "Status dan kesiapan layanan backend." },
+    { name: "Auth", description: "Pendaftaran akun, sesi login, logout, dan profil pengguna aktif." },
+    {
+      name: "Emotional Check-ins",
+      description: "Pencatatan kondisi emosi pengguna beserta intensitas dan pemicunya.",
+    },
+    { name: "Mind Entries", description: "Catatan pikiran pribadi milik pengguna." },
+    { name: "Small Wins", description: "Pencatatan pencapaian kecil berdasarkan tanggal dan kategori." },
   ],
   paths: {
     "/api/health": {
       get: {
         tags: ["System"],
-        summary: "Check API health",
+        summary: "Cek status API",
+        description:
+          "Memastikan service backend aktif dan siap menerima request. Endpoint ini tidak mengakses database dan digunakan sebagai healthcheck Railway.",
         responses: {
           "200": {
             description: "API is healthy",
@@ -56,7 +61,9 @@ export const openApiDocument = {
     "/api/auth/register": {
       post: {
         tags: ["Auth"],
-        summary: "Register an account",
+        summary: "Daftarkan akun",
+        description:
+          "Membuat pengguna baru dari nama, email, dan password. Email harus unik. Jika berhasil, backend langsung membuat cookie sesi HTTP-only.",
         requestBody: {
           required: true,
           content: {
@@ -89,7 +96,9 @@ export const openApiDocument = {
     "/api/auth/login": {
       post: {
         tags: ["Auth"],
-        summary: "Log in",
+        summary: "Masuk ke akun",
+        description:
+          "Memverifikasi email dan password pengguna. Jika valid, backend menyimpan cookie sesi HTTP-only untuk mengakses endpoint terproteksi.",
         requestBody: {
           required: true,
           content: {
@@ -122,7 +131,9 @@ export const openApiDocument = {
     "/api/auth/logout": {
       post: {
         tags: ["Auth"],
-        summary: "Log out",
+        summary: "Keluar dari akun",
+        description:
+          "Menghapus cookie sesi pada browser sehingga request berikutnya tidak lagi dianggap terautentikasi.",
         responses: {
           "200": {
             description: "Session cookie cleared",
@@ -138,7 +149,9 @@ export const openApiDocument = {
     "/api/auth/me": {
       get: {
         tags: ["Auth"],
-        summary: "Get the current user",
+        summary: "Ambil profil pengguna aktif",
+        description:
+          "Mengembalikan profil pengguna berdasarkan cookie sesi. Endpoint mengembalikan 401 jika sesi tidak tersedia atau tidak valid.",
         security: [{ cookieAuth: [] }],
         responses: {
           "200": {
@@ -156,7 +169,9 @@ export const openApiDocument = {
     "/api/emotional-check-ins": {
       post: {
         tags: ["Emotional Check-ins"],
-        summary: "Create an emotional check-in",
+        summary: "Buat emotional check-in",
+        description:
+          "Mencatat emosi pengguna, intensitas dari 1 sampai 5, dan catatan pemicu opsional. Data otomatis dikaitkan dengan pengguna yang sedang login.",
         security: [{ cookieAuth: [] }],
         requestBody: {
           required: true,
@@ -181,7 +196,9 @@ export const openApiDocument = {
       },
       get: {
         tags: ["Emotional Check-ins"],
-        summary: "List the current user's emotional check-ins",
+        summary: "Ambil daftar emotional check-in",
+        description:
+          "Mengambil seluruh emotional check-in milik pengguna yang sedang login, diurutkan dari catatan terbaru.",
         security: [{ cookieAuth: [] }],
         responses: {
           "200": {
@@ -199,7 +216,9 @@ export const openApiDocument = {
     "/api/mind-entries": {
       post: {
         tags: ["Mind Entries"],
-        summary: "Create a mind entry",
+        summary: "Buat mind entry",
+        description:
+          "Menyimpan catatan pikiran milik pengguna yang sedang login. Field isSaved bersifat opsional dan bernilai true secara default.",
         security: [{ cookieAuth: [] }],
         requestBody: {
           required: true,
@@ -224,7 +243,9 @@ export const openApiDocument = {
       },
       get: {
         tags: ["Mind Entries"],
-        summary: "List the current user's mind entries",
+        summary: "Ambil daftar mind entry",
+        description:
+          "Mengambil seluruh mind entry milik pengguna yang sedang login, diurutkan dari catatan terbaru.",
         security: [{ cookieAuth: [] }],
         responses: {
           "200": {
@@ -242,7 +263,9 @@ export const openApiDocument = {
     "/api/small-wins": {
       post: {
         tags: ["Small Wins"],
-        summary: "Create a small win",
+        summary: "Buat small win",
+        description:
+          "Mencatat pencapaian kecil dengan judul dan tanggal. Deskripsi serta kategori bersifat opsional, dan data otomatis dimiliki pengguna yang sedang login.",
         security: [{ cookieAuth: [] }],
         requestBody: {
           required: true,
@@ -267,7 +290,9 @@ export const openApiDocument = {
       },
       get: {
         tags: ["Small Wins"],
-        summary: "List the current user's small wins",
+        summary: "Ambil daftar small win",
+        description:
+          "Mengambil seluruh small win milik pengguna yang sedang login, diurutkan berdasarkan tanggal pencapaian terbaru.",
         security: [{ cookieAuth: [] }],
         responses: {
           "200": {
