@@ -16,7 +16,25 @@ app.use(cors({ origin: env.CLIENT_ORIGIN, credentials: true }));
 app.use(express.json({ limit: "16kb" }));
 
 app.get("/api/openapi.json", (_request, response) => response.json(openApiDocument));
-app.use("/api/reference", apiReference({ url: "/api/openapi.json" }));
+app.use(
+  "/api/reference",
+  apiReference({
+    url: "/api/openapi.json",
+    darkMode: true,
+    customCss: `
+      .dark-mode .references-rendered {
+        background:
+          radial-gradient(circle at 70% 5%, rgba(67, 56, 202, 0.18), transparent 38%),
+          linear-gradient(145deg, #070817 0%, #0b0c20 48%, #03040d 100%);
+        background-attachment: fixed;
+      }
+
+      .dark-mode .references-navigation {
+        background: rgba(3, 4, 15, 0.96);
+      }
+    `,
+  }),
+);
 
 app.get("/api/health", (_request, response) => {
   response.json({
