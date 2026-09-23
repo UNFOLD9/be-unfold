@@ -3,6 +3,9 @@ import express from "express";
 
 import { env } from "./config/env.js";
 import { authRouter } from "./routes/auth.js";
+import { emotionalCheckInsRouter } from "./routes/emotional-check-ins.js";
+import { mindEntriesRouter } from "./routes/mind-entries.js";
+import { smallWinsRouter } from "./routes/small-wins.js";
 
 export const app = express();
 
@@ -19,6 +22,9 @@ app.get("/api/health", (_request, response) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/emotional-check-ins", emotionalCheckInsRouter);
+app.use("/api/mind-entries", mindEntriesRouter);
+app.use("/api/small-wins", smallWinsRouter);
 
 app.use((_request, response) => {
   response.status(404).json({ success: false, message: "Route not found", data: null });
