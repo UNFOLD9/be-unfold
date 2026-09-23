@@ -14,6 +14,8 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@neon/config": "^1.7.2",
+    "@neon/env": "^1.4.3",
     "cors": "^2.8.6",
     "dotenv": "^18.0.1",
     "drizzle-orm": "^0.45.2",
