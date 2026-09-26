@@ -51,7 +51,7 @@ The API runs at `http://localhost:3001` by default.
 | --- | --- |
 | `PORT` | HTTP server port |
 | `DATABASE_URL` | PostgreSQL connection URL |
-| `CLIENT_ORIGIN` | Frontend origin allowed by CORS |
+| `CLIENT_ORIGIN` | Comma-separated frontend origins allowed by CORS |
 | `JWT_SECRET` | Secret used to sign authentication tokens |
 
 ## Scripts
